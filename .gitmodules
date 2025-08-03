@@ -1,0 +1,3 @@
+[submodule "HangulKit"]
+	path = HangulKit
+	url = https://github.com/Dev0June/HangulKit.git
