@@ -11,7 +11,7 @@ import InputMethodKit
 @objc(MacimeInputController)
 open class MacimeInputController: IMKInputController {
     
-    private var hangulContext: _HangulInputContext?
+    private var hangulContext: HangulInputContext?
     private var currentKeyboard = "1hand-right" // 기본값: 오른손 갈마들이
     
     override open func activateServer(_ sender: Any!) {
@@ -19,7 +19,7 @@ open class MacimeInputController: IMKInputController {
         NSLog("macime activated with HangulKit")
         
         // HangulKit 컨텍스트 초기화
-        hangulContext = _HangulInputContext(keyboard: currentKeyboard)
+        hangulContext = HangulInputContext(keyboard: currentKeyboard)
         
         if hangulContext == nil {
             NSLog("Failed to initialize HangulInputContext with keyboard: \(currentKeyboard)")
@@ -146,7 +146,7 @@ open class MacimeInputController: IMKInputController {
         }
         
         // 새 키보드로 컨텍스트 재생성
-        hangulContext = _HangulInputContext(keyboard: currentKeyboard)
+        hangulContext = HangulInputContext(keyboard: currentKeyboard)
         
         NSLog("Keyboard switched to: \(currentKeyboard)")
         

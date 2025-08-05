@@ -31,7 +31,7 @@
 
 /* Begin PBXFileReference section */
 		015B530E2E408CDB002654BC /* InputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
-		015B53112E408D2F002654BC /* HangulKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HangulKit.framework; path = HangulKit/build/HangulKit.framework; sourceTree = "<group>"; };
+		015B53112E408D2F002654BC /* HangulKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HangulKit.framework; path = HangulKit.framework; sourceTree = "<group>"; };
 		01A1A0002E1A0F6600366F13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01A1A0062E1A0F6800366F13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01A1A0092E1A0F6800366F13 /* macime.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macime.png; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/HangulKit/build",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = macime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -325,7 +325,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/HangulKit/build",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = macime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

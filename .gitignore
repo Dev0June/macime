@@ -120,3 +120,6 @@ Temporary Items
 *.app
 *.dmg
 *.pkg
+
+# Generated Framework
+HangulKit.framework/
