@@ -7,17 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		015B530F2E408CDC002654BC /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015B530E2E408CDB002654BC /* InputController.swift */; };
+		015B53122E408D2F002654BC /* HangulKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015B53112E408D2F002654BC /* HangulKit.framework */; };
+		015B53132E408D2F002654BC /* HangulKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 015B53112E408D2F002654BC /* HangulKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		01A1A0012E1A0F6600366F13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1A0002E1A0F6600366F13 /* AppDelegate.swift */; };
-		01A1A0032E1A0F6600366F13 /* MacimeInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1A0022E1A0F6600366F13 /* MacimeInputController.swift */; };
-		01A1A0052E1A0F6600366F13 /* HangulComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1A0042E1A0F6600366F13 /* HangulComposer.swift */; };
 		01A1A0072E1A0F6800366F13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01A1A0062E1A0F6800366F13 /* Assets.xcassets */; };
 		01A1A00A2E1A0F6800366F13 /* macime.png in Resources */ = {isa = PBXBuildFile; fileRef = 01A1A0092E1A0F6800366F13 /* macime.png */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		015B53142E408D2F002654BC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				015B53132E408D2F002654BC /* HangulKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		015B530E2E408CDB002654BC /* InputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
+		015B53112E408D2F002654BC /* HangulKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HangulKit.framework; path = HangulKit/build/HangulKit.framework; sourceTree = "<group>"; };
 		01A1A0002E1A0F6600366F13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		01A1A0022E1A0F6600366F13 /* MacimeInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacimeInputController.swift; sourceTree = "<group>"; };
-		01A1A0042E1A0F6600366F13 /* HangulComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangulComposer.swift; sourceTree = "<group>"; };
 		01A1A0062E1A0F6800366F13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01A1A0092E1A0F6800366F13 /* macime.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macime.png; sourceTree = "<group>"; };
 		01A1A00B2E1A0F6800366F13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -30,17 +45,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				015B53122E408D2F002654BC /* HangulKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		015B53102E408D2E002654BC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				015B53112E408D2F002654BC /* HangulKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		01A1A0F82E1A0F6600366F13 = {
 			isa = PBXGroup;
 			children = (
 				01A1A1032E1A0F6600366F13 /* macime */,
 				01A1A1022E1A0F6600366F13 /* Products */,
+				015B53102E408D2E002654BC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,9 +81,8 @@
 			isa = PBXGroup;
 			children = (
 				01A1A00B2E1A0F6800366F13 /* Info.plist */,
+				015B530E2E408CDB002654BC /* InputController.swift */,
 				01A1A0002E1A0F6600366F13 /* AppDelegate.swift */,
-				01A1A0022E1A0F6600366F13 /* MacimeInputController.swift */,
-				01A1A0042E1A0F6600366F13 /* HangulComposer.swift */,
 				01A1A0062E1A0F6800366F13 /* Assets.xcassets */,
 				01A1A0092E1A0F6800366F13 /* macime.png */,
 				01D8F8C22E3F3973008D1A06 /* macime.entitlements */,
@@ -76,6 +100,7 @@
 				01A1A0FE2E1A0F6600366F13 /* Frameworks */,
 				01A1A0FF2E1A0F6600366F13 /* Resources */,
 				01A1A1002E1A0F6600366F13 /* Sources */,
+				015B53142E408D2F002654BC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -136,9 +161,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				015B530F2E408CDC002654BC /* InputController.swift in Sources */,
 				01A1A0012E1A0F6600366F13 /* AppDelegate.swift in Sources */,
-				01A1A0032E1A0F6600366F13 /* MacimeInputController.swift in Sources */,
-				01A1A0052E1A0F6600366F13 /* HangulComposer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +296,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HangulKit/build",
+				);
 				INFOPLIST_FILE = macime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -281,6 +309,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.inputmethod.macime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "macime/macime-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -294,6 +323,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HangulKit/build",
+				);
 				INFOPLIST_FILE = macime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -303,6 +336,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.inputmethod.macime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "macime/macime-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
