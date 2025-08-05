@@ -123,3 +123,6 @@ Temporary Items
 
 # Generated Framework
 HangulKit.framework/
+
+# VS Code
+.vscode/
