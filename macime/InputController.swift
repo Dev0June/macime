@@ -97,6 +97,17 @@ class InputController: IMKInputController {
             return false
         }
         
+        // 단축키 처리 (modifier 키가 눌린 경우)
+        if modifiers.contains(.command) || modifiers.contains(.control) || modifiers.contains(.option) {
+            print("macime: Modifier key detected, delegating to system")
+            // 조합 중인 텍스트가 있으면 완성 후 시스템으로 넘김
+            let flush = context.flush()
+            if !flush.isEmpty {
+                updateDisplay(client: client, preedit: "", committed: flush)
+            }
+            return false // 시스템이 단축키를 처리하도록 함
+        }
+        
         // 특수 키 처리
         switch keyCode {
         case 36: // Return
