@@ -2,24 +2,38 @@
 //  AppDelegate.swift
 //  macime
 //
-//  Created by JBK
+//  Created by JBK on 2025/07/06.
 //
 
-import Cocoa
+import Foundation
 import InputMethodKit
+import AppKit
 
-@main
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    var server = IMKServer()
-
+    var server: IMKServer?
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
-        server = IMKServer(name: Bundle.main.infoDictionary?["InputMethodConnectionName"] as? String, bundleIdentifier: Bundle.main.bundleIdentifier)
-        NSLog("macime server started")
+        // InputMethodKit 서버 초기화
+        let connectionName = "macime_Connection"
+        let bundleIdentifier = "com.inputmethod.macime"
+        server = IMKServer(name: connectionName, bundleIdentifier: bundleIdentifier)
         
-        // 재부팅 후 나오는 윈도우를 바로 끔
+        // 입력 메서드 등록
+        registerInputMethod()
+
         if let w = NSApplication.shared.windows.first {
             w.close()
         }
+    }
+    
+    func registerInputMethod() {
+        // 입력 메서드 등록 로직
+        print("macime 입력 메서드가 등록되었습니다.")
+    }
+    
+    func applicationWillTerminate(_ notification: Notification) {
+        // 앱 종료 시 정리 작업
+        print("macime 입력 메서드가 종료됩니다.")
     }
 }

@@ -13,7 +13,7 @@
 	<key>InputMethodConnectionName</key>
 	<string>macime_Connection</string>
 	<key>InputMethodServerControllerClass</key>
-	<string>MacimeInputController</string>
+	<string>InputController</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>

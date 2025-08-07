@@ -2,163 +2,208 @@
 //  InputController.swift
 //  macime
 //
-//  HangulKit 기반 한글 입력 컨트롤러
-//  갈마들이 키보드 지원 (1hand-right, 1hand-left)
+//  Created by JBK on 2025/07/06.
 //
 
+import Foundation
 import InputMethodKit
 
-@objc(MacimeInputController)
-open class MacimeInputController: IMKInputController {
+@objc(InputController)
+class InputController: IMKInputController {
     
     private var hangulContext: HangulInputContext?
-    private var currentKeyboard = "1hand-right" // 기본값: 오른손 갈마들이
+    private var client: IMKTextInput?
     
-    override open func activateServer(_ sender: Any!) {
+    override func activateServer(_ sender: Any!) {
         super.activateServer(sender)
-        NSLog("macime activated with HangulKit")
-        
-        // HangulKit 컨텍스트 초기화
-        hangulContext = HangulInputContext(keyboard: currentKeyboard)
-        
-        if hangulContext == nil {
-            NSLog("Failed to initialize HangulInputContext with keyboard: \(currentKeyboard)")
-        } else {
-            NSLog("HangulInputContext initialized successfully with keyboard: \(currentKeyboard)")
-        }
+        client = sender as? IMKTextInput
+        // 기본값: 한손 오른손 키보드
+        // 나중에 설정에서 변경 가능하도록 할 키보드들:
+        // - "1hand-right": 오른손 (기본값)  
+        // - "1hand-left": 왼손
+        hangulContext = HangulInputContext(keyboard: "1hand-right")
+        print("macime 입력 컨트롤러가 활성화되었습니다.")
+        print("macime client: \(client != nil ? "OK" : "NIL")")
+        print("macime hangulContext: \(hangulContext != nil ? "OK" : "NIL")")
     }
     
-    override open func deactivateServer(_ sender: Any!) {
+    override func deactivateServer(_ sender: Any!) {
         super.deactivateServer(sender)
-        NSLog("macime deactivated")
-        
-        // 남은 조합 완료
-        commitComposition(sender)
-        
-        // 컨텍스트 정리
         hangulContext = nil
+        print("macime 입력 컨트롤러가 비활성화되었습니다.")
     }
     
-    override open func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
-        guard event.type == .keyDown else {
+    override func inputText(_ string: String!, client: Any!) -> Bool {
+        print("macime inputText called: '\(string ?? "nil")'")
+        
+        guard let inputString = string, !inputString.isEmpty else {
+            print("macime inputText: empty string, returning false")
             return false
         }
         
         guard let context = hangulContext else {
-            NSLog("HangulInputContext is nil")
+            print("macime inputText: hangul context not initialized")
             return false
         }
         
+        // 각 문자를 처리
+        for char in inputString {
+            let ascii = Int(char.asciiValue ?? 0)
+            print("macime inputText: processing character '\(char)' (ascii: \(ascii))")
+            
+            _ = context.processKey(Int32(ascii))
+            let preedit = context.preeditString()
+            let commit = context.commitString()
+            
+            print("macime inputText: preedit='\(preedit)', commit='\(commit)'")
+            
+            // 결과를 클라이언트에 전송
+            updateDisplay(client: client, preedit: preedit, committed: commit)
+        }
+        
+        return true
+    }
+    
+    override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
+        print("macime handle called: event type=\(event?.type.rawValue ?? 0)")
+        
+        guard let event = event else { 
+            print("macime handle: event is nil")
+            return false 
+        }
+        
+        switch event.type {
+        case .keyDown:
+            print("macime handle: keyDown event")
+            return handleKeyDown(event: event, client: sender)
+        case .flagsChanged:
+            print("macime handle: flagsChanged event")
+            return handleFlagsChanged(event: event, client: sender)
+        default:
+            print("macime handle: other event type=\(event.type.rawValue)")
+            return false
+        }
+    }
+    
+    private func handleKeyDown(event: NSEvent, client: Any!) -> Bool {
         let keyCode = event.keyCode
+        let modifiers = event.modifierFlags
+        let characters = event.characters ?? ""
+        
+        print("macime handleKeyDown: keyCode=\(keyCode), characters='\(characters)', modifiers=\(modifiers.rawValue)")
+        
+        guard let context = hangulContext else {
+            print("macime: hangul context not initialized")
+            return false
+        }
         
         // 특수 키 처리
-        if keyCode == 36 || keyCode == 49 { // Enter or Space
-            commitComposition(sender)
-            return false
-        }
-        
-        if keyCode == 51 { // Backspace
-            if context.backspace() {
-                updateDisplay(client: sender)
-                return true
-            } else {
-                return false // 더 이상 지울 것이 없으면 시스템에 위임
+        switch keyCode {
+        case 36: // Return
+            print("macime: Enter key pressed")
+            let flush = context.flush()
+            if !flush.isEmpty {
+                updateDisplay(client: client, preedit: "", committed: flush)
             }
-        }
-        
-        // 키보드 전환 (Cmd + Space)
-        if event.modifierFlags.contains(.command) && keyCode == 49 {
-            switchKeyboard()
+            updateDisplay(client: client, preedit: "", committed: "\n")
             return true
-        }
-        
-        // ASCII 키 입력 처리
-        if let characters = event.characters, !characters.isEmpty {
-            let firstChar = characters.first!
-            let ascii = Int32(firstChar.asciiValue ?? 0)
             
-            if ascii > 0 {
-                let processed = context.processKey(ascii)
-                if processed {
-                    updateDisplay(client: sender)
-                    return true
-                }
+        case 49: // Space
+            print("macime: Space key pressed")
+            let flush = context.flush()
+            if !flush.isEmpty {
+                updateDisplay(client: client, preedit: "", committed: flush)
+            }
+            updateDisplay(client: client, preedit: "", committed: " ")
+            return true
+            
+        case 51: // Delete
+            print("macime: Backspace key pressed")
+            if context.isEmpty() {
+                print("macime: No composition, delegating backspace to system")
+                return false
+            } else {
+                let success = context.backspace()
+                print("macime: backspace() returned: \(success)")
+                let preedit = context.preeditString()
+                let commit = context.commitString()
+                print("macime: After backspace - preedit='\(preedit)', commit='\(commit)'")
+                updateDisplay(client: client, preedit: preedit, committed: commit)
+                return true
+            }
+            
+        case 53: // Escape
+            print("macime: Escape key pressed")
+            let flush = context.flush()
+            updateDisplay(client: client, preedit: "", committed: flush)
+            return true
+            
+        default:
+            // 일반 문자 처리 - 모든 키를 libhangul로 전달
+            if let char = characters.first {
+                let ascii = Int(char.asciiValue ?? 0)
+                print("macime: Character key pressed: '\(char)' (ascii: \(ascii))")
+                
+                let processed = context.processKey(Int32(ascii))
+                let preedit = context.preeditString()
+                let commit = context.commitString()
+                print("macime: processed=\(processed), preedit='\(preedit)', commit='\(commit)'")
+                
+                updateDisplay(client: client, preedit: preedit, committed: commit)
+                return processed
             }
         }
         
         return false
     }
     
-    private func updateDisplay(client sender: Any!) {
-        guard let context = hangulContext,
-              let client = sender as? IMKTextInput else { return }
+    private func handleFlagsChanged(event: NSEvent, client: Any!) -> Bool {
+        // CapsLock 처리 등
+        return false
+    }
+    
+    private func updateDisplay(client: Any!, preedit: String, committed: String, backspace: Bool = false) {
+        guard let textClient = client as? IMKTextInput else { return }
         
-        let commit = context.commitString()
-        let preedit = context.preeditString()
-        
-        // 완성된 문자가 있으면 입력
-        if !commit.isEmpty {
-            client.insertText(commit, replacementRange: NSRange(location: NSNotFound, length: 0))
+        // 완성된 텍스트 삽입
+        if !committed.isEmpty {
+            textClient.insertText(committed, replacementRange: NSRange(location: NSNotFound, length: NSNotFound))
         }
         
-        // 조합 중인 문자 표시
+        // 조합 중인 텍스트 표시 또는 마킹 해제
         if !preedit.isEmpty {
-            client.setMarkedText(preedit, 
-                               selectionRange: NSRange(location: preedit.count, length: 0),
-                               replacementRange: NSRange(location: NSNotFound, length: 0))
+            let attributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue]
+            let attributedString = NSAttributedString(string: preedit, attributes: attributes)
+            textClient.setMarkedText(attributedString, selectionRange: NSRange(location: 0, length: preedit.count), replacementRange: NSRange(location: NSNotFound, length: NSNotFound))
         } else {
-            client.setMarkedText("", 
-                               selectionRange: NSRange(location: 0, length: 0),
-                               replacementRange: NSRange(location: NSNotFound, length: 0))
+            // 조합이 끝났으면 마킹 해제
+            textClient.setMarkedText(NSAttributedString(string: ""), selectionRange: NSRange(location: 0, length: 0), replacementRange: NSRange(location: NSNotFound, length: NSNotFound))
         }
     }
     
-    override open func commitComposition(_ sender: Any!) {
-        guard let context = hangulContext,
-              let client = sender as? IMKTextInput else { return }
-        
-        // 남은 조합 강제 완료
-        let flushed = context.flush()
-        if !flushed.isEmpty {
-            client.insertText(flushed, replacementRange: NSRange(location: NSNotFound, length: 0))
-        }
-        
-        // 마킹된 텍스트 제거
-        client.setMarkedText("", 
-                           selectionRange: NSRange(location: 0, length: 0),
-                           replacementRange: NSRange(location: NSNotFound, length: 0))
-    }
-    
-    // MARK: - 키보드 전환 기능
-    
-    private func switchKeyboard() {
-        // 오른손 ↔ 왼손 갈마들이 전환
-        currentKeyboard = (currentKeyboard == "1hand-right") ? "1hand-left" : "1hand-right"
-        
-        // 현재 조합 완료
-        if let context = hangulContext {
-            let flushed = context.flush()
-            if !flushed.isEmpty {
-                // 마지막 클라이언트에 입력 (실제로는 현재 포커스된 앱)
-                // 여기서는 로그만 출력
-                NSLog("Switching keyboard - flushed text: \(flushed)")
+    // 조합 상태 표시
+    override func updateComposition() {
+        guard let context = hangulContext else { return }
+        let preedit = context.preeditString()
+        if !preedit.isEmpty {
+            // 조합 중인 상태 표시
+            if let textClient = client {
+                let attributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue]
+                let attributedString = NSAttributedString(string: preedit, attributes: attributes)
+                textClient.setMarkedText(attributedString, selectionRange: NSRange(location: 0, length: preedit.count), replacementRange: NSRange(location: NSNotFound, length: 0))
             }
         }
-        
-        // 새 키보드로 컨텍스트 재생성
-        hangulContext = HangulInputContext(keyboard: currentKeyboard)
-        
-        NSLog("Keyboard switched to: \(currentKeyboard)")
-        
-        // 사용자에게 알림 (간단한 방법)
-        let notification = "\(currentKeyboard == "1hand-right" ? "오른손" : "왼손") 갈마들이"
-        NSLog("Active keyboard: \(notification)")
     }
     
-    // MARK: - 상태 확인 메서드
-    
-    override open func setValue(_ value: Any!, forTag tag: Int, client sender: Any!) {
-        // 필요시 추가 설정 처리
-        super.setValue(value, forTag: tag, client: sender)
+    // 조합 취소
+    override func cancelComposition() {
+        guard let context = hangulContext else { return }
+        let flush = context.flush()
+        if let textClient = client {
+            if !flush.isEmpty {
+                textClient.insertText(flush, replacementRange: NSRange(location: NSNotFound, length: NSNotFound))
+            }
+            textClient.setMarkedText(NSAttributedString(), selectionRange: NSRange(location: 0, length: 0), replacementRange: NSRange(location: NSNotFound, length: 0))
+        }
     }
 }

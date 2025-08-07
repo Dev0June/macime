@@ -7,22 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		015B530F2E408CDC002654BC /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015B530E2E408CDB002654BC /* InputController.swift */; };
-		015B53122E408D2F002654BC /* HangulKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015B53112E408D2F002654BC /* HangulKit.framework */; };
-		015B53132E408D2F002654BC /* HangulKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 015B53112E408D2F002654BC /* HangulKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		01A1A0012E1A0F6600366F13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1A0002E1A0F6600366F13 /* AppDelegate.swift */; };
-		01A1A0072E1A0F6800366F13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01A1A0062E1A0F6800366F13 /* Assets.xcassets */; };
-		01A1A00A2E1A0F6800366F13 /* macime.png in Resources */ = {isa = PBXBuildFile; fileRef = 01A1A0092E1A0F6800366F13 /* macime.png */; };
+		017435C92E1A0F6800366F13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 017435C82E1A0F6800366F13 /* Assets.xcassets */; };
+		017435CC2E1A0F6800366F13 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 017435CB2E1A0F6800366F13 /* Preview Assets.xcassets */; };
+		017435D62E1A10D300366F13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017435D52E1A10D300366F13 /* AppDelegate.swift */; };
+		017435DA2E1A118B00366F13 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017435D92E1A118B00366F13 /* InputController.swift */; };
+		01MACAPP2E1A0F6600366F13 /* macimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01MACAPP1E1A0F6600366F13 /* macimeApp.swift */; };
+		01A15A0E2E1B64FD003AE624 /* macime.png in Resources */ = {isa = PBXBuildFile; fileRef = 01A15A0D2E1B64FD003AE624 /* macime.png */; };
+		01HANGUL3F1A0F6600366F13 /* HangulKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01HANGUL2F1A0F6600366F13 /* HangulKit.framework */; };
+		01HANGUL4F1A0F6600366F13 /* HangulKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01HANGUL2F1A0F6600366F13 /* HangulKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		015B53142E408D2F002654BC /* Embed Frameworks */ = {
+		01HANGUL5F1A0F6600366F13 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				015B53132E408D2F002654BC /* HangulKit.framework in Embed Frameworks */,
+				01HANGUL4F1A0F6600366F13 /* HangulKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -30,77 +32,85 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		015B530E2E408CDB002654BC /* InputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
-		015B53112E408D2F002654BC /* HangulKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HangulKit.framework; path = HangulKit.framework; sourceTree = "<group>"; };
-		01A1A0002E1A0F6600366F13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		01A1A0062E1A0F6800366F13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		01A1A0092E1A0F6800366F13 /* macime.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macime.png; sourceTree = "<group>"; };
-		01A1A00B2E1A0F6800366F13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		01A1A00C2E1A0F6800366F13 /* macime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macime.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		01D8F8C22E3F3973008D1A06 /* macime.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = macime.entitlements; sourceTree = "<group>"; };
+		015BE4BF2E1BE3A4007F22FB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		017435C12E1A0F6600366F13 /* macime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macime.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		017435C82E1A0F6800366F13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		017435CB2E1A0F6800366F13 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		017435CD2E1A0F6800366F13 /* macime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macime.entitlements; sourceTree = "<group>"; };
+		017435D52E1A10D300366F13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		017435D92E1A118B00366F13 /* InputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
+		017435DB2E1A128F00366F13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01A15A0D2E1B64FD003AE624 /* macime.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macime.png; sourceTree = "<group>"; };
+		01BRIDGE2F1A0F6600366F13 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		01HANGUL2F1A0F6600366F13 /* HangulKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HangulKit.framework; sourceTree = "<group>"; };
+		01MACAPP1E1A0F6600366F13 /* macimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macimeApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		01A1A0FE2E1A0F6600366F13 /* Frameworks */ = {
+		017435BE2E1A0F6600366F13 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				015B53122E408D2F002654BC /* HangulKit.framework in Frameworks */,
+				01HANGUL3F1A0F6600366F13 /* HangulKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		015B53102E408D2E002654BC /* Frameworks */ = {
+		017435B82E1A0F6600366F13 = {
 			isa = PBXGroup;
 			children = (
-				015B53112E408D2F002654BC /* HangulKit.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		01A1A0F82E1A0F6600366F13 = {
-			isa = PBXGroup;
-			children = (
-				01A1A1032E1A0F6600366F13 /* macime */,
-				01A1A1022E1A0F6600366F13 /* Products */,
-				015B53102E408D2E002654BC /* Frameworks */,
+				017435C32E1A0F6600366F13 /* macime */,
+				015BE4BF2E1BE3A4007F22FB /* README.md */,
+				01HANGUL2F1A0F6600366F13 /* HangulKit.framework */,
+				017435C22E1A0F6600366F13 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		01A1A1022E1A0F6600366F13 /* Products */ = {
+		017435C22E1A0F6600366F13 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				01A1A00C2E1A0F6800366F13 /* macime.app */,
+				017435C12E1A0F6600366F13 /* macime.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		01A1A1032E1A0F6600366F13 /* macime */ = {
+		017435C32E1A0F6600366F13 /* macime */ = {
 			isa = PBXGroup;
 			children = (
-				01A1A00B2E1A0F6800366F13 /* Info.plist */,
-				015B530E2E408CDB002654BC /* InputController.swift */,
-				01A1A0002E1A0F6600366F13 /* AppDelegate.swift */,
-				01A1A0062E1A0F6800366F13 /* Assets.xcassets */,
-				01A1A0092E1A0F6800366F13 /* macime.png */,
-				01D8F8C22E3F3973008D1A06 /* macime.entitlements */,
+				017435DB2E1A128F00366F13 /* Info.plist */,
+				017435D52E1A10D300366F13 /* AppDelegate.swift */,
+				017435D92E1A118B00366F13 /* InputController.swift */,
+				01MACAPP1E1A0F6600366F13 /* macimeApp.swift */,
+				01BRIDGE2F1A0F6600366F13 /* Bridging-Header.h */,
+				017435C82E1A0F6800366F13 /* Assets.xcassets */,
+				017435CD2E1A0F6800366F13 /* macime.entitlements */,
+				01A15A0D2E1B64FD003AE624 /* macime.png */,
+				017435CA2E1A0F6800366F13 /* Preview Content */,
 			);
 			path = macime;
+			sourceTree = "<group>";
+		};
+		017435CA2E1A0F6800366F13 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				017435CB2E1A0F6800366F13 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		01A1A1012E1A0F6600366F13 /* macime */ = {
+		017435C02E1A0F6600366F13 /* macime */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 01A1A1112E1A0F6800366F13 /* Build configuration list for PBXNativeTarget "macime" */;
+			buildConfigurationList = 017435D02E1A0F6800366F13 /* Build configuration list for PBXNativeTarget "macime" */;
 			buildPhases = (
-				01A1A0FE2E1A0F6600366F13 /* Frameworks */,
-				01A1A0FF2E1A0F6600366F13 /* Resources */,
-				01A1A1002E1A0F6600366F13 /* Sources */,
-				015B53142E408D2F002654BC /* Embed Frameworks */,
+				017435BD2E1A0F6600366F13 /* Sources */,
+				017435BE2E1A0F6600366F13 /* Frameworks */,
+				017435BF2E1A0F6600366F13 /* Resources */,
+				01HANGUL5F1A0F6600366F13 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -108,25 +118,25 @@
 			);
 			name = macime;
 			productName = macime;
-			productReference = 01A1A00C2E1A0F6800366F13 /* macime.app */;
+			productReference = 017435C12E1A0F6600366F13 /* macime.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		01A1A0F92E1A0F6600366F13 /* Project object */ = {
+		017435B92E1A0F6600366F13 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
-					01A1A1012E1A0F6600366F13 = {
-						CreatedOnToolsVersion = 15.0;
+					017435C02E1A0F6600366F13 = {
+						CreatedOnToolsVersion = 14.2;
 					};
 				};
 			};
-			buildConfigurationList = 01A1A0FC2E1A0F6600366F13 /* Build configuration list for PBXProject "macime" */;
+			buildConfigurationList = 017435BC2E1A0F6600366F13 /* Build configuration list for PBXProject "macime" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -134,46 +144,47 @@
 				en,
 				Base,
 			);
-			mainGroup = 01A1A0F82E1A0F6600366F13;
-			productRefGroup = 01A1A1022E1A0F6600366F13 /* Products */;
+			mainGroup = 017435B82E1A0F6600366F13;
+			productRefGroup = 017435C22E1A0F6600366F13 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				01A1A1012E1A0F6600366F13 /* macime */,
+				017435C02E1A0F6600366F13 /* macime */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		01A1A0FF2E1A0F6600366F13 /* Resources */ = {
+		017435BF2E1A0F6600366F13 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01A1A0072E1A0F6800366F13 /* Assets.xcassets in Resources */,
-				01A1A00A2E1A0F6800366F13 /* macime.png in Resources */,
+				017435CC2E1A0F6800366F13 /* Preview Assets.xcassets in Resources */,
+				01A15A0E2E1B64FD003AE624 /* macime.png in Resources */,
+				017435C92E1A0F6800366F13 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		01A1A1002E1A0F6600366F13 /* Sources */ = {
+		017435BD2E1A0F6600366F13 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				015B530F2E408CDC002654BC /* InputController.swift in Sources */,
-				01A1A0012E1A0F6600366F13 /* AppDelegate.swift in Sources */,
+				017435D62E1A10D300366F13 /* AppDelegate.swift in Sources */,
+				017435DA2E1A118B00366F13 /* InputController.swift in Sources */,
+				01MACAPP2E1A0F6600366F13 /* macimeApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		01A1A10F2E1A0F6800366F13 /* Debug */ = {
+		017435CE2E1A0F6800366F13 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -206,8 +217,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -221,22 +231,20 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		01A1A1102E1A0F6800366F13 /* Release */ = {
+		017435CF2E1A0F6800366F13 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -269,8 +277,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -278,16 +285,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
-		01A1A1122E1A0F6800366F13 /* Debug */ = {
+		017435D12E1A0F6800366F13 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -296,11 +303,17 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"macime/Preview Content\"";
+				DEVELOPMENT_TEAM = ZMG682A8PJ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = macime/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -309,12 +322,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.inputmethod.macime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "macime/macime-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "macime/Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		01A1A1132E1A0F6800366F13 /* Release */ = {
+		017435D22E1A0F6800366F13 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -323,20 +336,27 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"macime/Preview Content\"";
+				DEVELOPMENT_TEAM = ZMG682A8PJ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = macime/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.inputmethod.macime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "macime/macime-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "macime/Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -344,25 +364,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		01A1A0FC2E1A0F6600366F13 /* Build configuration list for PBXProject "macime" */ = {
+		017435BC2E1A0F6600366F13 /* Build configuration list for PBXProject "macime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				01A1A10F2E1A0F6800366F13 /* Debug */,
-				01A1A1102E1A0F6800366F13 /* Release */,
+				017435CE2E1A0F6800366F13 /* Debug */,
+				017435CF2E1A0F6800366F13 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		01A1A1112E1A0F6800366F13 /* Build configuration list for PBXNativeTarget "macime" */ = {
+		017435D02E1A0F6800366F13 /* Build configuration list for PBXNativeTarget "macime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				01A1A1122E1A0F6800366F13 /* Debug */,
-				01A1A1132E1A0F6800366F13 /* Release */,
+				017435D12E1A0F6800366F13 /* Debug */,
+				017435D22E1A0F6800366F13 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 01A1A0F92E1A0F6600366F13 /* Project object */;
+	rootObject = 017435B92E1A0F6600366F13 /* Project object */;
 }
