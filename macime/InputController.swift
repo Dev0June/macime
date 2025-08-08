@@ -116,8 +116,8 @@ class InputController: IMKInputController {
             if !flush.isEmpty {
                 updateDisplay(client: client, preedit: "", committed: flush)
             }
-            updateDisplay(client: client, preedit: "", committed: "\n")
-            return true
+            // Enter 키는 시스템에서 직접 처리하도록 함
+            return false
             
         case 49: // Space
             print("macime: Space key pressed")
