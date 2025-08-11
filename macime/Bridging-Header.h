@@ -6,3 +6,4 @@
 //
 
 #import <HangulKit/HangulWrapper.h>
+#import <HangulKit/EngWrapper.h>
