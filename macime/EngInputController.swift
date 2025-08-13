@@ -24,6 +24,9 @@ class EngInputController: IMKInputController {
         print("=== EngInputController activateServer CALLED ===")
         print("Client: \(String(describing: sender))")
         
+        // 먼저 기존 타이머들을 정리 (이전 세션의 잔여물)
+        cleanupTimers()
+        
         super.activateServer(sender)
         client = sender as? IMKTextInput
         
@@ -41,15 +44,15 @@ class EngInputController: IMKInputController {
     }
     
     override func deactivateServer(_ sender: Any!) {
-        super.deactivateServer(sender)
+        print("=== EngInputController deactivateServer CALLED ===")
         
         // 타이머 정리
-        spaceAutoReleaseTimer?.invalidate()
-        spaceAutoReleaseTimer = nil
-        spaceResetTimer?.invalidate()
-        spaceResetTimer = nil
+        cleanupTimers()
         
         engContext = nil
+        client = nil
+        
+        super.deactivateServer(sender)
         print("EngInputController 비활성화됨")
     }
     
@@ -309,11 +312,10 @@ class EngInputController: IMKInputController {
     
     // 조합 취소
     override func cancelComposition() {
+        print("=== EngInputController cancelComposition CALLED ===")
+        
         // 타이머 정리 (IME 전환 시 호출될 수 있음)
-        spaceAutoReleaseTimer?.invalidate()
-        spaceAutoReleaseTimer = nil
-        spaceResetTimer?.invalidate()
-        spaceResetTimer = nil
+        cleanupTimers()
         
         guard let context = engContext else { return }
         let flush = context.flush()
@@ -327,18 +329,73 @@ class EngInputController: IMKInputController {
     
     // 추가 디버깅 메서드들
     override func commitComposition(_ sender: Any!) {
+        print("=== EngInputController commitComposition CALLED ===")
+        
         // 타이머 정리 (IME 전환 시 호출될 수 있음)
-        spaceAutoReleaseTimer?.invalidate()
-        spaceAutoReleaseTimer = nil
-        spaceResetTimer?.invalidate()
-        spaceResetTimer = nil
+        cleanupTimers()
+        
+        // 조합 상태가 있으면 커밋
+        if let context = engContext {
+            let flush = context.flush()
+            if let textClient = client, !flush.isEmpty {
+                textClient.insertText(flush, replacementRange: NSRange(location: NSNotFound, length: NSNotFound))
+            }
+            if let textClient = client {
+                textClient.setMarkedText(NSAttributedString(), selectionRange: NSRange(location: 0, length: 0), replacementRange: NSRange(location: NSNotFound, length: 0))
+            }
+        }
         
         os_log("commitComposition called", log: logger, type: .default)
-        super.commitComposition(sender)
+        // super.commitComposition(sender) 호출하지 않음 - 우리가 직접 처리
     }
     
     override func candidates(_ sender: Any!) -> [Any]! {
         os_log("candidates called", log: logger, type: .default)
         return super.candidates(sender)
+    }
+    
+    // 통합 타이머 정리 메서드
+    private func cleanupTimers() {
+        print("=== EngInputController cleanupTimers CALLED ===")
+        
+        // Space 자동 해제 타이머
+        if let timer = spaceAutoReleaseTimer {
+            print("Invalidating spaceAutoReleaseTimer")
+            timer.invalidate()
+            spaceAutoReleaseTimer = nil
+        }
+        
+        // Space 리셋 타이머
+        if let timer = spaceResetTimer {
+            print("Invalidating spaceResetTimer")
+            timer.invalidate()
+            spaceResetTimer = nil
+        }
+        
+        print("All timers cleaned up")
+    }
+    
+    // 추가 IME 라이프사이클 메서드들에도 타이머 정리 추가
+    override func setValue(_ value: Any!, forTag tag: Int, client sender: Any!) {
+        print("=== EngInputController setValue CALLED ===")
+        super.setValue(value, forTag: tag, client: sender)
+    }
+    
+    override func value(forTag tag: Int, client sender: Any!) -> Any! {
+        print("=== EngInputController value(forTag) CALLED ===")
+        return super.value(forTag: tag, client: sender)
+    }
+    
+    override func menu() -> NSMenu! {
+        print("=== EngInputController menu CALLED ===")
+        return super.menu()
+    }
+    
+    deinit {
+        print("=== EngInputController deinit CALLED ===")
+        // deinit에서도 타이머 정리
+        cleanupTimers()
+        engContext = nil
+        client = nil
     }
 }
