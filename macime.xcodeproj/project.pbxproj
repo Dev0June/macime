@@ -11,10 +11,11 @@
 		017435CC2E1A0F6800366F13 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 017435CB2E1A0F6800366F13 /* Preview Assets.xcassets */; };
 		017435D62E1A10D300366F13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017435D52E1A10D300366F13 /* AppDelegate.swift */; };
 		017435DA2E1A118B00366F13 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017435D92E1A118B00366F13 /* InputController.swift */; };
-		01MACAPP2E1A0F6600366F13 /* macimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01MACAPP1E1A0F6600366F13 /* macimeApp.swift */; };
 		01A15A0E2E1B64FD003AE624 /* macime.png in Resources */ = {isa = PBXBuildFile; fileRef = 01A15A0D2E1B64FD003AE624 /* macime.png */; };
+		01CA2B292E4ADCFB006BD36D /* EngInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CA2B282E4ADCFB006BD36D /* EngInputController.swift */; };
 		01HANGUL3F1A0F6600366F13 /* HangulKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01HANGUL2F1A0F6600366F13 /* HangulKit.framework */; };
 		01HANGUL4F1A0F6600366F13 /* HangulKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01HANGUL2F1A0F6600366F13 /* HangulKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		01MACAPP2E1A0F6600366F13 /* macimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01MACAPP1E1A0F6600366F13 /* macimeApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,7 +32,6 @@
 		};
 /* End PBXCopyFilesBuildPhase section */
 
-
 /* Begin PBXFileReference section */
 		015BE4BF2E1BE3A4007F22FB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		017435C12E1A0F6600366F13 /* macime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macime.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,6 +43,7 @@
 		017435DB2E1A128F00366F13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01A15A0D2E1B64FD003AE624 /* macime.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macime.png; sourceTree = "<group>"; };
 		01BRIDGE2F1A0F6600366F13 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		01CA2B282E4ADCFB006BD36D /* EngInputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngInputController.swift; sourceTree = "<group>"; };
 		01HANGUL2F1A0F6600366F13 /* HangulKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HangulKit.framework; sourceTree = "<group>"; };
 		01MACAPP1E1A0F6600366F13 /* macimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macimeApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				017435DB2E1A128F00366F13 /* Info.plist */,
+				01CA2B282E4ADCFB006BD36D /* EngInputController.swift */,
 				017435D52E1A10D300366F13 /* AppDelegate.swift */,
 				017435D92E1A118B00366F13 /* InputController.swift */,
 				01MACAPP1E1A0F6600366F13 /* macimeApp.swift */,
@@ -174,6 +176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				017435D62E1A10D300366F13 /* AppDelegate.swift in Sources */,
+				01CA2B292E4ADCFB006BD36D /* EngInputController.swift in Sources */,
 				017435DA2E1A118B00366F13 /* InputController.swift in Sources */,
 				01MACAPP2E1A0F6600366F13 /* macimeApp.swift in Sources */,
 			);
