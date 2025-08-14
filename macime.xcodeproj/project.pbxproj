@@ -13,6 +13,8 @@
 		017435DA2E1A118B00366F13 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017435D92E1A118B00366F13 /* InputController.swift */; };
 		01A15A0E2E1B64FD003AE624 /* macime.png in Resources */ = {isa = PBXBuildFile; fileRef = 01A15A0D2E1B64FD003AE624 /* macime.png */; };
 		01CA2B292E4ADCFB006BD36D /* EngInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CA2B282E4ADCFB006BD36D /* EngInputController.swift */; };
+		8D0AC694F9E54F329859 /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19486B667414B4D836A /* EventHandler.swift */; };
+		19E3455B0C2A4C10AAF7 /* KeyMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65169D9936C847C0B57A /* KeyMapper.swift */; };
 		01HANGUL3F1A0F6600366F13 /* HangulKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01HANGUL2F1A0F6600366F13 /* HangulKit.framework */; };
 		01HANGUL4F1A0F6600366F13 /* HangulKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01HANGUL2F1A0F6600366F13 /* HangulKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		01MACAPP2E1A0F6600366F13 /* macimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01MACAPP1E1A0F6600366F13 /* macimeApp.swift */; };
@@ -44,6 +46,8 @@
 		01A15A0D2E1B64FD003AE624 /* macime.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macime.png; sourceTree = "<group>"; };
 		01BRIDGE2F1A0F6600366F13 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		01CA2B282E4ADCFB006BD36D /* EngInputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngInputController.swift; sourceTree = "<group>"; };
+		C19486B667414B4D836A /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
+		65169D9936C847C0B57A /* KeyMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyMapper.swift; sourceTree = "<group>"; };
 		01HANGUL2F1A0F6600366F13 /* HangulKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HangulKit.framework; sourceTree = "<group>"; };
 		01MACAPP1E1A0F6600366F13 /* macimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macimeApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,6 +87,8 @@
 			children = (
 				017435DB2E1A128F00366F13 /* Info.plist */,
 				01CA2B282E4ADCFB006BD36D /* EngInputController.swift */,
+				C19486B667414B4D836A /* EventHandler.swift */,
+				65169D9936C847C0B57A /* KeyMapper.swift */,
 				017435D52E1A10D300366F13 /* AppDelegate.swift */,
 				017435D92E1A118B00366F13 /* InputController.swift */,
 				01MACAPP1E1A0F6600366F13 /* macimeApp.swift */,
@@ -177,6 +183,8 @@
 			files = (
 				017435D62E1A10D300366F13 /* AppDelegate.swift in Sources */,
 				01CA2B292E4ADCFB006BD36D /* EngInputController.swift in Sources */,
+				8D0AC694F9E54F329859 /* EventHandler.swift in Sources */,
+				19E3455B0C2A4C10AAF7 /* KeyMapper.swift in Sources */,
 				017435DA2E1A118B00366F13 /* InputController.swift in Sources */,
 				01MACAPP2E1A0F6600366F13 /* macimeApp.swift in Sources */,
 			);
