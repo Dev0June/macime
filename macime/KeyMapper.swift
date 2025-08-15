@@ -9,6 +9,7 @@
 import Foundation
 import CoreGraphics
 import Carbon.HIToolbox
+import AppKit
 
 // 이벤트 구조체
 public struct Events {
@@ -26,6 +27,10 @@ public final class KeyMapper {
     private var isSpaceDown = false
     private var typedCharacterWhileSpaceWasDown = false
     
+    // macOS 시스템 키 반복 설정 사용
+    private var spaceRepeatTimer: DispatchSourceTimer?
+    private var allowSpaceRepeat = false
+    
     public init() {}
     
     // 이벤트 처리 메인 함수  
@@ -40,10 +45,28 @@ public final class KeyMapper {
         switch typedKeyCode {
         case kVK_Space:
             if type == .keyDown {
-                isSpaceDown = true
-                return nil // Space keyDown 소비
+                if !isSpaceDown {
+                    // 첫 번째 Space keyDown
+                    isSpaceDown = true
+                    allowSpaceRepeat = false
+                    
+                    // macOS 시스템 키 반복 딜레이 후 반복 활성화
+                    startSpaceRepeatTimer()
+                    
+                    return nil // 첫 번째 keyDown 소비
+                } else {
+                    // 키 반복 중인 keyDown
+                    if allowSpaceRepeat {
+                        return Events(mainEvent: Unmanaged.passUnretained(event))
+                    } else {
+                        return nil // 아직 타이머 전이므로 소비
+                    }
+                }
             } else if type == .keyUp {
                 isSpaceDown = false
+                allowSpaceRepeat = false
+                stopSpaceRepeatTimer()
+                
                 if typedCharacterWhileSpaceWasDown {
                     typedCharacterWhileSpaceWasDown = false
                     return nil // Space keyUp 소비
@@ -86,6 +109,28 @@ public final class KeyMapper {
     // half-qwerty 레이아웃용 매핑된 키 코드 반환 (Space + 키 조합)
     private func getMappedKey(for keyCode: Int) -> Int? {
         return halfQwertyMapping[keyCode]
+    }
+    
+    // macOS 시스템 키 반복 설정을 사용한 타이머
+    private func startSpaceRepeatTimer() {
+        stopSpaceRepeatTimer() // 기존 타이머 정리
+        
+        spaceRepeatTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+        
+        // macOS 시스템 키 반복 딜레이 가져오기 (초 → 밀리초)
+        let systemDelay = NSEvent.keyRepeatDelay * 1000
+        let delayMs = Int(systemDelay)
+        
+        spaceRepeatTimer?.schedule(deadline: .now() + .milliseconds(delayMs))
+        spaceRepeatTimer?.setEventHandler { [weak self] in
+            self?.allowSpaceRepeat = true
+        }
+        spaceRepeatTimer?.resume()
+    }
+    
+    private func stopSpaceRepeatTimer() {
+        spaceRepeatTimer?.cancel()
+        spaceRepeatTimer = nil
     }
     
     // Half-QWERTY 매핑 테이블
