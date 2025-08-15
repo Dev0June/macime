@@ -24,9 +24,15 @@ class InputController: IMKInputController {
     // 로거
     private let logger = OSLog(subsystem: "com.inputmethod.macime", category: "InputController")
     
+    // 입력 소스 변경 감지용 observer
+    private var inputSourceObserver: NSObjectProtocol?
+    
     override func activateServer(_ sender: Any!) {
         super.activateServer(sender)
         client = sender as? IMKTextInput
+        
+        // setValue로 입력 소스 변경 감지하므로 observer 불필요
+        // setupInputSourceObserver()
         
         // 현재 입력 소스 정보 상세 출력
         if let inputSource = TISCopyCurrentKeyboardInputSource()?.takeRetainedValue() {
@@ -35,7 +41,9 @@ class InputController: IMKInputController {
             // 입력 소스 ID 확인
             if let sourceIDRef = TISGetInputSourceProperty(inputSource, kTISPropertyInputSourceID) {
                 let sourceID = Unmanaged<CFString>.fromOpaque(sourceIDRef).takeUnretainedValue() as String
-                os_log("TISInputSourceID: %@", log: logger, type: .info, sourceID)
+                os_log("TISInputSourceID: %@", log: logger, type: .error, sourceID)
+                print("DEBUG: TISInputSourceID = '\(sourceID)'")
+                os_log("🔍 activateServer 실제 TISInputSourceID 값: %{public}@", log: logger, type: .error, sourceID)
                 
                 if sourceID == "com.inputmethod.macime.korean" {
                     os_log("설정: 한글 모드", log: logger, type: .info)
@@ -76,11 +84,17 @@ class InputController: IMKInputController {
     override func deactivateServer(_ sender: Any!) {
         super.deactivateServer(sender)
         
+        // 입력 소스 변경 알림 제거 (observer 사용 안 함)
+        // removeInputSourceObserver()
+        
+        // 모드에 따른 적절한 정리
         if hangulContext != nil {
             hangulContext = nil
         } else {
             eventHandler.stop()
         }
+        
+        os_log("적절한 상태 정리 완료", log: logger, type: .info)
         
         print("macime 입력 컨트롤러 비활성화: \(hangulContext != nil ? "한글" : "영문") 모드")
     }
@@ -105,12 +119,6 @@ class InputController: IMKInputController {
         // 한글 컨텍스트 해제
         hangulContext = nil
         os_log("한글 컨텍스트 해제 완료", log: logger, type: .info)
-        
-        // 접근성 권한 확인
-        if !eventHandler.checkAccessibilityPermission() {
-            os_log("접근성 권한이 필요합니다", log: logger, type: .error)
-            _ = eventHandler.requestAccessibilityPermission()
-        }
         
         let success = eventHandler.start()
         if success {
@@ -194,7 +202,9 @@ class InputController: IMKInputController {
         }
         
         // 단축키 처리 (modifier 키가 눌린 경우)
-        if modifiers.contains(.command) || modifiers.contains(.control) || modifiers.contains(.option) {
+        if modifiers.contains(.command) || 
+           modifiers.contains(.control) || 
+           modifiers.contains(.option) {
             print("macime: Modifier key detected, delegating to system")
             // 조합 중인 텍스트가 있으면 완성 후 시스템으로 넘김
             let flush = context.flush()
@@ -325,11 +335,14 @@ class InputController: IMKInputController {
         // setValue의 value 파라미터에서 직접 TISInputSourceID 확인
         if let sourceID = value as? String {
             os_log("setValue - Direct TISInputSourceID: %@", log: logger, type: .info, sourceID)
+            print("DEBUG setValue: TISInputSourceID = '\(sourceID)'")
+            os_log("🔍 setValue 실제 TISInputSourceID 값: %{public}@", log: logger, type: .error, sourceID)
             
-            if sourceID == "com.inputmethod.macime.korean" && hangulContext == nil {
+            // setValue에서는 표시 이름으로 비교
+            if (sourceID == "한손한글" || sourceID == "com.inputmethod.macime.korean") && hangulContext == nil {
                 os_log("setValue - 한글 모드로 전환", log: logger, type: .info)
                 setupKoreanMode()
-            } else if sourceID == "com.inputmethod.macime.english" && hangulContext != nil {
+            } else if (sourceID == "한손영어" || sourceID == "com.inputmethod.macime.english") && hangulContext != nil {
                 os_log("setValue - 영문 모드로 전환", log: logger, type: .info)
                 setupEnglishMode()
             }
@@ -342,5 +355,53 @@ class InputController: IMKInputController {
     override func recognizedEvents(_ sender: Any!) -> Int {
         os_log("recognizedEvents called", log: logger, type: .debug)
         return Int(NSEvent.EventTypeMask.keyDown.rawValue | NSEvent.EventTypeMask.flagsChanged.rawValue)
+    }
+    
+    // 입력 소스 상태 강제 새로고침
+    private func refreshInputSourceState() {
+        os_log("=== 입력 소스 상태 강제 새로고침 ===", log: logger, type: .info)
+        
+        if let inputSource = TISCopyCurrentKeyboardInputSource()?.takeRetainedValue() {
+            if let sourceIDRef = TISGetInputSourceProperty(inputSource, kTISPropertyInputSourceID) {
+                let sourceID = Unmanaged<CFString>.fromOpaque(sourceIDRef).takeUnretainedValue() as String
+                os_log("새로고침된 TISInputSourceID: %@", log: logger, type: .info, sourceID)
+                print("DEBUG refresh: TISInputSourceID = '\(sourceID)'")
+                os_log("🔍 실제 TISInputSourceID 값: %{public}@", log: logger, type: .error, sourceID)
+                
+                // 현재 상태와 비교해서 필요시 모드 전환
+                if sourceID == "com.inputmethod.macime.korean" && hangulContext == nil {
+                    os_log("새로고침 - 한글 모드로 전환", log: logger, type: .info)
+                    setupKoreanMode()
+                } else if sourceID == "com.inputmethod.macime.english" && hangulContext != nil {
+                    os_log("새로고침 - 영문 모드로 전환", log: logger, type: .info)
+                    setupEnglishMode()
+                }
+            }
+        }
+    }
+    
+    // 입력 소스 변경 감지 설정
+    private func setupInputSourceObserver() {
+        removeInputSourceObserver() // 기존 observer 제거
+        
+        inputSourceObserver = NotificationCenter.default.addObserver(
+            forName: NSNotification.Name(rawValue: kTISNotifySelectedKeyboardInputSourceChanged as String),
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            os_log("입력 소스 변경 감지됨!", log: self?.logger ?? OSLog.default, type: .info)
+            self?.refreshInputSourceState()
+        }
+        
+        os_log("입력 소스 변경 알림 등록됨", log: logger, type: .info)
+    }
+    
+    // 입력 소스 변경 감지 제거
+    private func removeInputSourceObserver() {
+        if let observer = inputSourceObserver {
+            NotificationCenter.default.removeObserver(observer)
+            inputSourceObserver = nil
+            os_log("입력 소스 변경 알림 제거됨", log: logger, type: .info)
+        }
     }
 }
