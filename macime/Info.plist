@@ -22,7 +22,7 @@
 	<dict>
 		<key>tsInputModeListKey</key>
 		<dict>
-			<key>com.inputmethod.macime.korean</key>
+			<key>1Hand-kor</key>
 			<dict>
 				<key>TISInputSourceID</key>
 				<string>com.inputmethod.macime.korean</string>
@@ -47,7 +47,7 @@
 					<string>Hang</string>
 				</array>
 			</dict>
-			<key>com.inputmethod.macime.english</key>
+			<key>Half-qwerty</key>
 			<dict>
 				<key>TISInputSourceID</key>
 				<string>com.inputmethod.macime.english</string>
