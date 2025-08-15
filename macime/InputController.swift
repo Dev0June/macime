@@ -7,6 +7,10 @@
 
 import Foundation
 import InputMethodKit
+import ApplicationServices
+import CoreGraphics
+import Carbon.HIToolbox
+import os.log
 
 @objc(InputController)
 class InputController: IMKInputController {
@@ -14,35 +18,122 @@ class InputController: IMKInputController {
     private var hangulContext: HangulInputContext?
     private var client: IMKTextInput?
     
+    // 영문 모드용 이벤트 핸들러
+    private let eventHandler = EventHandler()
+    
+    // 로거
+    private let logger = OSLog(subsystem: "com.inputmethod.macime", category: "InputController")
+    
     override func activateServer(_ sender: Any!) {
         super.activateServer(sender)
         client = sender as? IMKTextInput
-        // 기본값: 한손 오른손 키보드
-        // 나중에 설정에서 변경 가능하도록 할 키보드들:
-        // - "1hand-right": 오른손 (기본값)  
-        // - "1hand-left": 왼손
-        hangulContext = HangulInputContext(keyboard: "1hand-right")
-        print("macime 입력 컨트롤러가 활성화되었습니다.")
-        print("macime client: \(client != nil ? "OK" : "NIL")")
-        print("macime hangulContext: \(hangulContext != nil ? "OK" : "NIL")")
+        
+        // 현재 입력 소스 정보 상세 출력
+        if let inputSource = TISCopyCurrentKeyboardInputSource()?.takeRetainedValue() {
+            os_log("=== Current Input Source Debug ===", log: logger, type: .info)
+            
+            // 입력 소스 ID 확인
+            if let sourceIDRef = TISGetInputSourceProperty(inputSource, kTISPropertyInputSourceID) {
+                let sourceID = Unmanaged<CFString>.fromOpaque(sourceIDRef).takeUnretainedValue() as String
+                os_log("TISInputSourceID: %@", log: logger, type: .info, sourceID)
+                
+                if sourceID == "com.inputmethod.macime.korean" {
+                    os_log("설정: 한글 모드", log: logger, type: .info)
+                    setupKoreanMode()
+                } else if sourceID == "com.inputmethod.macime.english" {
+                    os_log("설정: 영문 모드", log: logger, type: .info)
+                    setupEnglishMode()
+                } else {
+                    os_log("알 수 없는 TISInputSourceID, 기본값: 한글 모드", log: logger, type: .info)
+                    setupKoreanMode()
+                }
+            } else {
+                os_log("TISInputSourceID를 가져올 수 없음, 기본값: 한글 모드", log: logger, type: .info)
+                setupKoreanMode()
+            }
+            
+            // 추가 디버깅 정보
+            if let bundleIDRef = TISGetInputSourceProperty(inputSource, kTISPropertyBundleID) {
+                let bundleID = Unmanaged<CFString>.fromOpaque(bundleIDRef).takeUnretainedValue() as String
+                os_log("Bundle ID: %@", log: logger, type: .info, bundleID)
+            }
+            
+            if let nameRef = TISGetInputSourceProperty(inputSource, kTISPropertyLocalizedName) {
+                let name = Unmanaged<CFString>.fromOpaque(nameRef).takeUnretainedValue() as String
+                os_log("Localized Name: %@", log: logger, type: .info, name)
+            }
+            
+            os_log("================================", log: logger, type: .info)
+        } else {
+            os_log("현재 입력 소스를 가져올 수 없음, 기본값: 한글 모드", log: logger, type: .info)
+            setupKoreanMode()
+        }
+
+        os_log("macime 입력 컨트롤러 활성화: %@ 모드", log: logger, type: .info, hangulContext != nil ? "한글" : "영문")
+        os_log("macime client: %@", log: logger, type: .info, client != nil ? "OK" : "NIL")
     }
     
     override func deactivateServer(_ sender: Any!) {
         super.deactivateServer(sender)
+        
+        if hangulContext != nil {
+            hangulContext = nil
+        } else {
+            eventHandler.stop()
+        }
+        
+        print("macime 입력 컨트롤러 비활성화: \(hangulContext != nil ? "한글" : "영문") 모드")
+    }
+    
+    private func setupKoreanMode() {
+        os_log("=== 한글 모드 설정 시작 ===", log: logger, type: .info)
+        
+        // 기존 EventHandler 정지 (영문 모드에서 전환 시)
+        eventHandler.stop()
+        os_log("EventHandler 정지 완료", log: logger, type: .info)
+        
+        // 한글 컨텍스트 초기화
+        hangulContext = HangulInputContext(keyboard: "1hand-right")
+        os_log("한글 컨텍스트 초기화: %@", log: logger, type: .info, hangulContext != nil ? "성공" : "실패")
+        
+        os_log("=== 한글 모드 설정 완료 ===", log: logger, type: .info)
+    }
+    
+    private func setupEnglishMode() {
+        os_log("=== 영문 모드 설정 시작 ===", log: logger, type: .info)
+        
+        // 한글 컨텍스트 해제
         hangulContext = nil
-        print("macime 입력 컨트롤러가 비활성화되었습니다.")
+        os_log("한글 컨텍스트 해제 완료", log: logger, type: .info)
+        
+        // 접근성 권한 확인
+        if !eventHandler.checkAccessibilityPermission() {
+            os_log("접근성 권한이 필요합니다", log: logger, type: .error)
+            _ = eventHandler.requestAccessibilityPermission()
+        }
+        
+        let success = eventHandler.start()
+        if success {
+            os_log("EventHandler 시작 성공 - Half-QWERTY 활성화", log: logger, type: .info)
+        } else {
+            os_log("EventHandler 시작 실패 - 접근성 권한 확인 필요", log: logger, type: .error)
+        }
+        
+        os_log("=== 영문 모드 설정 완료 ===", log: logger, type: .info)
     }
     
     override func inputText(_ string: String!, client: Any!) -> Bool {
-        print("macime inputText called: '\(string ?? "nil")'")
+        os_log("inputText called: '%@'", log: logger, type: .info, string ?? "nil")
         
-        guard let inputString = string, !inputString.isEmpty else {
-            print("macime inputText: empty string, returning false")
-            return false
+        // 영문 모드에서는 시스템 기본 처리
+        guard let context = hangulContext else {
+            os_log("영문 모드 - 시스템 기본 처리", log: logger, type: .info)
+            return false  // 시스템이 처리하도록 함
         }
         
-        guard let context = hangulContext else {
-            print("macime inputText: hangul context not initialized")
+        // 한글 모드 처리
+        guard let inputString = string, !inputString.isEmpty else {
+            print("macime inputText: empty string, returning false")
             return false
         }
         
@@ -66,6 +157,11 @@ class InputController: IMKInputController {
     
     override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
         print("macime handle called: event type=\(event?.type.rawValue ?? 0)")
+        
+        // 영문 모드에서는 CGEvent tap이 처리
+        guard hangulContext != nil else {
+            return false
+        }
         
         guard let event = event else { 
             print("macime handle: event is nil")
@@ -194,7 +290,9 @@ class InputController: IMKInputController {
     
     // 조합 상태 표시
     override func updateComposition() {
+        // 영문 모드에서는 조합이 없음
         guard let context = hangulContext else { return }
+        
         let preedit = context.preeditString()
         if !preedit.isEmpty {
             // 조합 중인 상태 표시
@@ -208,6 +306,7 @@ class InputController: IMKInputController {
     
     // 조합 취소
     override func cancelComposition() {
+        // 영문 모드에서는 조합이 없음
         guard let context = hangulContext else { return }
         let flush = context.flush()
         if let textClient = client {
@@ -216,5 +315,32 @@ class InputController: IMKInputController {
             }
             textClient.setMarkedText(NSAttributedString(), selectionRange: NSRange(location: 0, length: 0), replacementRange: NSRange(location: NSNotFound, length: 0))
         }
+    }
+    
+    // 입력 모드가 변경될 때 호출
+    override func setValue(_ value: Any!, forTag tag: Int, client sender: Any!) {
+        os_log("=== setValue called ===", log: logger, type: .info)
+        os_log("tag: %d, value: %@", log: logger, type: .info, tag, String(describing: value))
+        
+        // setValue의 value 파라미터에서 직접 TISInputSourceID 확인
+        if let sourceID = value as? String {
+            os_log("setValue - Direct TISInputSourceID: %@", log: logger, type: .info, sourceID)
+            
+            if sourceID == "com.inputmethod.macime.korean" && hangulContext == nil {
+                os_log("setValue - 한글 모드로 전환", log: logger, type: .info)
+                setupKoreanMode()
+            } else if sourceID == "com.inputmethod.macime.english" && hangulContext != nil {
+                os_log("setValue - 영문 모드로 전환", log: logger, type: .info)
+                setupEnglishMode()
+            }
+        }
+        
+        super.setValue(value, forTag: tag, client: sender)
+    }
+    
+    // 입력 모드 변경 시점 감지를 위한 추가 메서드
+    override func recognizedEvents(_ sender: Any!) -> Int {
+        os_log("recognizedEvents called", log: logger, type: .debug)
+        return Int(NSEvent.EventTypeMask.keyDown.rawValue | NSEvent.EventTypeMask.flagsChanged.rawValue)
     }
 }

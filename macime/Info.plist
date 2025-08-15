@@ -13,14 +13,80 @@
 	<key>InputMethodConnectionName</key>
 	<string>macime_Connection</string>
 	<key>InputMethodServerControllerClass</key>
-	<string>EngInputController</string>
+	<string>InputController</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>12.7</string>
+	<key>ComponentInputModeDict</key>
+	<dict>
+		<key>tsInputModeListKey</key>
+		<dict>
+			<key>com.inputmethod.macime.korean</key>
+			<dict>
+				<key>TISInputSourceID</key>
+				<string>com.inputmethod.macime.korean</string>
+				<key>TISIntendedLanguage</key>
+				<string>ko</string>
+				<key>tsInputModeMenuIconFileKey</key>
+				<string>han.png</string>
+				<key>tsInputModeAlternateMenuIconFileKey</key>
+				<string>han.png</string>
+				<key>tsInputModePaletteIconFileKey</key>
+				<string>han.png</string>
+				<key>tsInputModeDefaultStateKey</key>
+				<true/>
+				<key>tsInputModeIsVisibleKey</key>
+				<true/>
+				<key>tsInputModePrimaryInScriptKey</key>
+				<true/>
+				<key>tsInputModeScriptKey</key>
+				<string>smKorean</string>
+				<key>tsInputMethodCharacterRepertoireKey</key>
+				<array>
+					<string>Hang</string>
+				</array>
+			</dict>
+			<key>com.inputmethod.macime.english</key>
+			<dict>
+				<key>TISInputSourceID</key>
+				<string>com.inputmethod.macime.english</string>
+				<key>TISIntendedLanguage</key>
+				<string>en</string>
+				<key>tsInputModeMenuIconFileKey</key>
+				<string>eng.png</string>
+				<key>tsInputModeAlternateMenuIconFileKey</key>
+				<string>eng.png</string>
+				<key>tsInputModePaletteIconFileKey</key>
+				<string>eng.png</string>
+				<key>tsInputModeDefaultStateKey</key>
+				<false/>
+				<key>tsInputModeIsVisibleKey</key>
+				<true/>
+				<key>tsInputModePrimaryInScriptKey</key>
+				<true/>
+				<key>tsInputModeScriptKey</key>
+				<string>smRoman</string>
+				<key>tsInputMethodCharacterRepertoireKey</key>
+				<array>
+					<string>Latn</string>
+				</array>
+			</dict>
+		</dict>
+		<key>tsVisibleInputModeOrderedArrayKey</key>
+		<array>
+			<string>com.inputmethod.macime.korean</string>
+			<string>com.inputmethod.macime.english</string>
+		</array>
+	</dict>
+	<key>TISInputSourceID</key>
+	<string>com.inputmethod.macime</string>
+	<key>TISIntendedLanguage</key>
+	<string>ko</string>
 	<key>tsInputMethodCharacterRepertoireKey</key>
 	<array>
 		<string>Hang</string>
+		<string>Latn</string>
 	</array>
 	<key>tsInputMethodIconFileKey</key>
 	<string>macime.png</string>
