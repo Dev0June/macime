@@ -11,14 +11,13 @@
 		017435CC2E1A0F6800366F13 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 017435CB2E1A0F6800366F13 /* Preview Assets.xcassets */; };
 		017435D62E1A10D300366F13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017435D52E1A10D300366F13 /* AppDelegate.swift */; };
 		017435DA2E1A118B00366F13 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017435D92E1A118B00366F13 /* InputController.swift */; };
-		01A15A0E2E1B64FD003AE624 /* macime.png in Resources */ = {isa = PBXBuildFile; fileRef = 01A15A0D2E1B64FD003AE624 /* macime.png */; };
 		01A15A0F2E1B64FE003AE624 /* han.png in Resources */ = {isa = PBXBuildFile; fileRef = 01A15A1D2E1B64FE003AE624 /* han.png */; };
 		01A15A102E1B64FF003AE624 /* eng.png in Resources */ = {isa = PBXBuildFile; fileRef = 01A15A1E2E1B64FF003AE624 /* eng.png */; };
-		8D0AC694F9E54F329859 /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19486B667414B4D836A /* EventHandler.swift */; };
-		19E3455B0C2A4C10AAF7 /* KeyMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65169D9936C847C0B57A /* KeyMapper.swift */; };
 		01HANGUL3F1A0F6600366F13 /* HangulKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01HANGUL2F1A0F6600366F13 /* HangulKit.framework */; };
 		01HANGUL4F1A0F6600366F13 /* HangulKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01HANGUL2F1A0F6600366F13 /* HangulKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		01MACAPP2E1A0F6600366F13 /* macimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01MACAPP1E1A0F6600366F13 /* macimeApp.swift */; };
+		19E3455B0C2A4C10AAF7 /* KeyMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65169D9936C847C0B57A /* KeyMapper.swift */; };
+		8D0AC694F9E54F329859 /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19486B667414B4D836A /* EventHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,14 +43,13 @@
 		017435D52E1A10D300366F13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		017435D92E1A118B00366F13 /* InputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
 		017435DB2E1A128F00366F13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		01A15A0D2E1B64FD003AE624 /* macime.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macime.png; sourceTree = "<group>"; };
 		01A15A1D2E1B64FE003AE624 /* han.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = han.png; sourceTree = "<group>"; };
 		01A15A1E2E1B64FF003AE624 /* eng.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eng.png; sourceTree = "<group>"; };
 		01BRIDGE2F1A0F6600366F13 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		C19486B667414B4D836A /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
-		65169D9936C847C0B57A /* KeyMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyMapper.swift; sourceTree = "<group>"; };
 		01HANGUL2F1A0F6600366F13 /* HangulKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HangulKit.framework; sourceTree = "<group>"; };
 		01MACAPP1E1A0F6600366F13 /* macimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macimeApp.swift; sourceTree = "<group>"; };
+		65169D9936C847C0B57A /* KeyMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyMapper.swift; sourceTree = "<group>"; };
+		C19486B667414B4D836A /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +94,6 @@
 				01BRIDGE2F1A0F6600366F13 /* Bridging-Header.h */,
 				017435C82E1A0F6800366F13 /* Assets.xcassets */,
 				017435CD2E1A0F6800366F13 /* macime.entitlements */,
-				01A15A0D2E1B64FD003AE624 /* macime.png */,
 				01A15A1D2E1B64FE003AE624 /* han.png */,
 				01A15A1E2E1B64FF003AE624 /* eng.png */,
 				017435CA2E1A0F6800366F13 /* Preview Content */,
@@ -172,7 +169,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				017435CC2E1A0F6800366F13 /* Preview Assets.xcassets in Resources */,
-				01A15A0E2E1B64FD003AE624 /* macime.png in Resources */,
 				01A15A0F2E1B64FE003AE624 /* han.png in Resources */,
 				01A15A102E1B64FF003AE624 /* eng.png in Resources */,
 				017435C92E1A0F6800366F13 /* Assets.xcassets in Resources */,

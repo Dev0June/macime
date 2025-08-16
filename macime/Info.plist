@@ -32,8 +32,6 @@
 				<string>han.png</string>
 				<key>tsInputModeAlternateMenuIconFileKey</key>
 				<string>han.png</string>
-				<key>tsInputModePaletteIconFileKey</key>
-				<string>han.png</string>
 				<key>tsInputModeDefaultStateKey</key>
 				<true/>
 				<key>tsInputModeIsVisibleKey</key>
@@ -57,8 +55,6 @@
 				<string>eng.png</string>
 				<key>tsInputModeAlternateMenuIconFileKey</key>
 				<string>eng.png</string>
-				<key>tsInputModePaletteIconFileKey</key>
-				<string>eng.png</string>
 				<key>tsInputModeDefaultStateKey</key>
 				<false/>
 				<key>tsInputModeIsVisibleKey</key>
@@ -79,12 +75,5 @@
 			<string>com.inputmethod.macime.english</string>
 		</array>
 	</dict>
-	<key>tsInputMethodCharacterRepertoireKey</key>
-	<array>
-		<string>Hang</string>
-		<string>Latn</string>
-	</array>
-	<key>tsInputMethodIconFileKey</key>
-	<string>macime.png</string>
 </dict>
 </plist>
