@@ -16,20 +16,7 @@ public final class EventHandler {
     private var eventTap: CFMachPort?
     private let keyMapper = KeyMapper()
     
-    // 생명주기
     public init() {}
-    
-    // 접근성 권한 확인
-    public func checkAccessibilityPermission() -> Bool {
-        let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as String: false]
-        return AXIsProcessTrustedWithOptions(options)
-    }
-    
-    // 접근성 권한 요청 (시스템 대화상자 표시)
-    public func requestAccessibilityPermission() -> Bool {
-        let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as String: true]
-        return AXIsProcessTrustedWithOptions(options)
-    }
     
     // 이벤트 핸들러 시작
     public func start() -> Bool {
