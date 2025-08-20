@@ -385,8 +385,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(BUILT_PRODUCTS_DIR)",
-					"$(PROJECT_DIR)/HangulKit/build/Debug",
 				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) $(BUILT_PRODUCTS_DIR) $(PROJECT_DIR)/HangulKit/build/Debug";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = macime/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -416,8 +416,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(BUILT_PRODUCTS_DIR)",
-					"$(PROJECT_DIR)/HangulKit/build/Debug",
 				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) $(BUILT_PRODUCTS_DIR) $(PROJECT_DIR)/HangulKit/build/Debug";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = macime/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
