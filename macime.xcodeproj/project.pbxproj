@@ -13,21 +13,45 @@
 		017435DA2E1A118B00366F13 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017435D92E1A118B00366F13 /* InputController.swift */; };
 		01A15A0F2E1B64FE003AE624 /* han.png in Resources */ = {isa = PBXBuildFile; fileRef = 01A15A1D2E1B64FE003AE624 /* han.png */; };
 		01A15A102E1B64FF003AE624 /* eng.png in Resources */ = {isa = PBXBuildFile; fileRef = 01A15A1E2E1B64FF003AE624 /* eng.png */; };
-		01HANGUL3F1A0F6600366F13 /* HangulKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01HANGUL2F1A0F6600366F13 /* HangulKit.framework */; };
-		01HANGUL4F1A0F6600366F13 /* HangulKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01HANGUL2F1A0F6600366F13 /* HangulKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		01EXTERNAL01EMBED0000001 /* HangulKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 017FD7F82E55E939000E9ABF /* HangulKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		01EXTERNAL01FRAMEWORK001 /* HangulKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 017FD7F82E55E939000E9ABF /* HangulKit.framework */; };
 		01MACAPP2E1A0F6600366F13 /* macimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01MACAPP1E1A0F6600366F13 /* macimeApp.swift */; };
 		19E3455B0C2A4C10AAF7 /* KeyMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65169D9936C847C0B57A /* KeyMapper.swift */; };
 		8D0AC694F9E54F329859 /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19486B667414B4D836A /* EventHandler.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		017FD7F52E55E939000E9ABF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EXTERNAL01PROJECT00001 /* HangulKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 01HANGUL04PRODUCT0000001;
+			remoteInfo = hangul;
+		};
+		017FD7F72E55E939000E9ABF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EXTERNAL01PROJECT00001 /* HangulKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 01HANGUL04PRODUCT0000002;
+			remoteInfo = HangulKit;
+		};
+		01EXTERNAL03PROXY0000002 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EXTERNAL01PROJECT00001 /* HangulKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 01HANGUL04TARGET00000002;
+			remoteInfo = HangulKit;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
-		01HANGUL5F1A0F6600366F13 /* Embed Frameworks */ = {
+		01HANGUL05EMBED000000001 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				01HANGUL4F1A0F6600366F13 /* HangulKit.framework in Embed Frameworks */,
+				01EXTERNAL01EMBED0000001 /* HangulKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -46,10 +70,10 @@
 		01A15A1D2E1B64FE003AE624 /* han.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = han.png; sourceTree = "<group>"; };
 		01A15A1E2E1B64FF003AE624 /* eng.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eng.png; sourceTree = "<group>"; };
 		01BRIDGE2F1A0F6600366F13 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		01HANGUL2F1A0F6600366F13 /* HangulKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HangulKit.framework; sourceTree = "<group>"; };
+		01EXTERNAL01PROJECT00001 /* HangulKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HangulKit.xcodeproj; path = HangulKit/HangulKit.xcodeproj; sourceTree = "<group>"; };
 		01MACAPP1E1A0F6600366F13 /* macimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macimeApp.swift; sourceTree = "<group>"; };
-		65169D9936C847C0B57A /* KeyMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyMapper.swift; sourceTree = "<group>"; };
-		C19486B667414B4D836A /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
+		65169D9936C847C0B57A /* KeyMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyMapper.swift; sourceTree = "<group>"; };
+		C19486B667414B4D836A /* EventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01HANGUL3F1A0F6600366F13 /* HangulKit.framework in Frameworks */,
+				01EXTERNAL01FRAMEWORK001 /* HangulKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,9 +91,9 @@
 		017435B82E1A0F6600366F13 = {
 			isa = PBXGroup;
 			children = (
-				017435C32E1A0F6600366F13 /* macime */,
 				015BE4BF2E1BE3A4007F22FB /* README.md */,
-				01HANGUL2F1A0F6600366F13 /* HangulKit.framework */,
+				017435C32E1A0F6600366F13 /* macime */,
+				01EXTERNAL01PROJECT00001 /* HangulKit.xcodeproj */,
 				017435C22E1A0F6600366F13 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -93,9 +117,9 @@
 				01MACAPP1E1A0F6600366F13 /* macimeApp.swift */,
 				01BRIDGE2F1A0F6600366F13 /* Bridging-Header.h */,
 				017435C82E1A0F6800366F13 /* Assets.xcassets */,
-				017435CD2E1A0F6800366F13 /* macime.entitlements */,
 				01A15A1D2E1B64FE003AE624 /* han.png */,
 				01A15A1E2E1B64FF003AE624 /* eng.png */,
+				017435CD2E1A0F6800366F13 /* macime.entitlements */,
 				017435CA2E1A0F6800366F13 /* Preview Content */,
 			);
 			path = macime;
@@ -109,6 +133,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		017FD7F12E55E933000E9ABF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				017FD7F62E55E939000E9ABF /* libhangul.a */,
+				017FD7F82E55E939000E9ABF /* HangulKit.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -119,11 +152,12 @@
 				017435BD2E1A0F6600366F13 /* Sources */,
 				017435BE2E1A0F6600366F13 /* Frameworks */,
 				017435BF2E1A0F6600366F13 /* Resources */,
-				01HANGUL5F1A0F6600366F13 /* Embed Frameworks */,
+				01HANGUL05EMBED000000001 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				01EXTERNAL06DEPEND0000001 /* PBXTargetDependency */,
 			);
 			name = macime;
 			productName = macime;
@@ -156,12 +190,35 @@
 			mainGroup = 017435B82E1A0F6600366F13;
 			productRefGroup = 017435C22E1A0F6600366F13 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 017FD7F12E55E933000E9ABF /* Products */;
+					ProjectRef = 01EXTERNAL01PROJECT00001 /* HangulKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				017435C02E1A0F6600366F13 /* macime */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		017FD7F62E55E939000E9ABF /* libhangul.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libhangul.a;
+			remoteRef = 017FD7F52E55E939000E9ABF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		017FD7F82E55E939000E9ABF /* HangulKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HangulKit.framework;
+			remoteRef = 017FD7F72E55E939000E9ABF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		017435BF2E1A0F6600366F13 /* Resources */ = {
@@ -183,14 +240,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				017435D62E1A10D300366F13 /* AppDelegate.swift in Sources */,
-				8D0AC694F9E54F329859 /* EventHandler.swift in Sources */,
-				19E3455B0C2A4C10AAF7 /* KeyMapper.swift in Sources */,
-				017435DA2E1A118B00366F13 /* InputController.swift in Sources */,
 				01MACAPP2E1A0F6600366F13 /* macimeApp.swift in Sources */,
+				017435DA2E1A118B00366F13 /* InputController.swift in Sources */,
+				19E3455B0C2A4C10AAF7 /* KeyMapper.swift in Sources */,
+				8D0AC694F9E54F329859 /* EventHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		01EXTERNAL06DEPEND0000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HangulKit;
+			targetProxy = 01EXTERNAL03PROXY0000002 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		017435CE2E1A0F6800366F13 /* Debug */ = {
@@ -224,7 +289,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CLANG_WARN_UNUSED_FUNCTION = YES;
+				CLANG_WARN_UNUSED_VARIABLE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -284,7 +350,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CLANG_WARN_UNUSED_FUNCTION = YES;
+				CLANG_WARN_UNUSED_VARIABLE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -315,16 +382,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"macime/Preview Content\"";
-				DEVELOPMENT_TEAM = ZMG682A8PJ;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					"$(BUILT_PRODUCTS_DIR)",
+					"$(PROJECT_DIR)/HangulKit/build/Debug",
 				);
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = macime/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -348,23 +413,20 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"macime/Preview Content\"";
-				DEVELOPMENT_TEAM = ZMG682A8PJ;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					"$(BUILT_PRODUCTS_DIR)",
+					"$(PROJECT_DIR)/HangulKit/build/Debug",
 				);
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = macime/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.inputmethod.macime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
