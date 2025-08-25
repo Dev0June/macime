@@ -21,6 +21,9 @@ class InputController: IMKInputController {
     // 영문 모드용 이벤트 핸들러
     private let eventHandler = EventHandler()
     
+    // Caps Lock 상태 추적
+    private var capsLockWasPressed = false
+    
     //***********************************************************************************
     // Info.plist에서 입력 모드 매핑 읽어오기  
     private lazy var inputModeMapping: [String: (id: String, language: String)] = {
@@ -230,8 +233,65 @@ class InputController: IMKInputController {
     }
     
     private func handleFlagsChanged(event: NSEvent, client: Any!) -> Bool {
-        // CapsLock 처리 등
+        let flags = event.modifierFlags
+        let isCapsLockPressed = flags.contains(.capsLock)
+        
+        // 한글 모드에서는 Caps Lock을 항상 한/영 전환으로 처리
+        if hangulContext != nil {
+            if isCapsLockPressed && !capsLockWasPressed {
+                capsLockWasPressed = true
+                // 현재 한글 조합 중인 텍스트가 있으면 완성
+                if let context = hangulContext {
+                    let flush = context.flush()
+                    if !flush.isEmpty {
+                        updateDisplay(client: client, preedit: "", committed: flush)
+                    }
+                }
+                
+                // 한/영 전환
+                performLanguageToggle()
+                return true // 이벤트 소비
+            } else if !isCapsLockPressed {
+                capsLockWasPressed = false
+            }
+        }
+        
+        // 영문 모드에서는 시스템이 처리하도록 허용 (대문자 토글)
         return false
+    }
+    
+    // 한/영 전환 수행
+    private func performLanguageToggle() {
+        // 현재 입력 소스 목록 가져오기
+        guard let inputSources = TISCreateInputSourceList(nil, false)?.takeRetainedValue() else { return }
+        let count = CFArrayGetCount(inputSources)
+        
+        // 현재 입력 소스
+        guard let currentSource = TISCopyCurrentKeyboardInputSource()?.takeRetainedValue() else { return }
+        guard let currentSourceIDRef = TISGetInputSourceProperty(currentSource, kTISPropertyInputSourceID) else { return }
+        let currentSourceID = Unmanaged<CFString>.fromOpaque(currentSourceIDRef).takeUnretainedValue() as String
+        
+        // 다음 입력 소스 찾기
+        var targetSource: TISInputSource?
+        
+        for i in 0..<count {
+            guard let source = CFArrayGetValueAtIndex(inputSources, i) else { continue }
+            let inputSource = Unmanaged<TISInputSource>.fromOpaque(source).takeUnretainedValue()
+            
+            guard let sourceIDRef = TISGetInputSourceProperty(inputSource, kTISPropertyInputSourceID) else { continue }
+            let sourceID = Unmanaged<CFString>.fromOpaque(sourceIDRef).takeUnretainedValue() as String
+            
+            // 현재 소스가 아니고 우리 입력기 중 하나인 경우
+            if sourceID != currentSourceID && inputModeMapping[sourceID] != nil {
+                targetSource = inputSource
+                break
+            }
+        }
+        
+        // 입력 소스 전환
+        if let target = targetSource {
+            TISSelectInputSource(target)
+        }
     }
     
     private func updateDisplay(client: Any!, preedit: String, committed: String, backspace: Bool = false) {

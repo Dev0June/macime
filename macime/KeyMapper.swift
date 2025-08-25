@@ -31,15 +31,19 @@ public final class KeyMapper {
     private var spaceRepeatTimer: DispatchSourceTimer?
     private var allowSpaceRepeat = false
     
+    // Caps Lock 상태 추적
+    private var capsLockPressTime: DispatchTime?
+    private var capsLockTimer: DispatchSourceTimer?
+    
     public init() {}
     
     // 이벤트 처리 메인 함수  
     public func process(event: CGEvent, type: CGEventType) -> Events? {
         let typedKeyCode = Int(event.getIntegerValueField(.keyboardEventKeycode))
         
-        // flagsChanged 이벤트는 Caps Lock 등 시스템 키를 위해 통과
+        // Caps Lock 처리
         if type == .flagsChanged {
-            return Events(mainEvent: Unmanaged.passUnretained(event))
+            return handleCapsLockFlagsChanged(event: event)
         }
         
         switch typedKeyCode {
@@ -131,6 +135,97 @@ public final class KeyMapper {
     private func stopSpaceRepeatTimer() {
         spaceRepeatTimer?.cancel()
         spaceRepeatTimer = nil
+    }
+    
+    // Caps Lock flagsChanged 이벤트 처리
+    private func handleCapsLockFlagsChanged(event: CGEvent) -> Events? {
+        let flags = event.flags
+        let isCapsLockPressed = flags.contains(.maskAlphaShift)
+        
+        if isCapsLockPressed {
+            // Caps Lock이 눌렸을 때
+            if capsLockPressTime == nil {
+                capsLockPressTime = .now()
+                startCapsLockTimer()
+                return nil // 이벤트 소비 - 타이머로 처리할 것
+            }
+        } else {
+            // Caps Lock이 해제되었을 때
+            if let pressTime = capsLockPressTime {
+                let pressDuration = DispatchTime.now().uptimeNanoseconds - pressTime.uptimeNanoseconds
+                let durationInMs = pressDuration / 1_000_000 // 나노초를 밀리초로 변환
+                
+                stopCapsLockTimer()
+                capsLockPressTime = nil
+                
+                // 시스템 키 반복 딜레이와 비교
+                let systemDelayMs = NSEvent.keyRepeatDelay * 1000
+                
+                if durationInMs < UInt64(systemDelayMs) { // 시스템 딜레이 이하면 짧은 누르기 - 한/영 전환
+                    // 한/영 전환 이벤트 생성 및 전송
+                    sendLanguageToggleEvent()
+                    return nil // 이벤트 소비
+                }
+                // 길게 눌렀을 경우는 시스템 대문자 토글이 이미 처리됨
+            }
+        }
+        
+        // 다른 flag 변경사항은 통과
+        return Events(mainEvent: Unmanaged.passUnretained(event))
+    }
+    
+    // macOS 시스템 키 반복 설정을 사용한 Caps Lock 타이머
+    private func startCapsLockTimer() {
+        stopCapsLockTimer()
+        
+        capsLockTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+        
+        // macOS 시스템 키 반복 딜레이 사용 (초 → 밀리초)
+        let systemDelay = NSEvent.keyRepeatDelay * 1000
+        let delayMs = Int(systemDelay)
+        
+        capsLockTimer?.schedule(deadline: .now() + .milliseconds(delayMs))
+        capsLockTimer?.setEventHandler { [weak self] in
+            // 길게 누르기가 확정되면 시스템 Caps Lock 토글 허용
+            self?.allowSystemCapsLockToggle()
+        }
+        capsLockTimer?.resume()
+    }
+    
+    private func stopCapsLockTimer() {
+        capsLockTimer?.cancel()
+        capsLockTimer = nil
+    }
+    
+    // 시스템 Caps Lock 토글 허용
+    private func allowSystemCapsLockToggle() {
+        // 현재 Caps Lock 상태를 시스템에 반영하도록 이벤트 생성
+        if let source = CGEventSource(stateID: .hidSystemState) {
+            let capsLockEvent = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(kVK_CapsLock), keyDown: false)
+            capsLockEvent?.flags = .maskAlphaShift
+            capsLockEvent?.post(tap: .cghidEventTap)
+        }
+    }
+    
+    // 한/영 전환 이벤트 전송
+    private func sendLanguageToggleEvent() {
+        // Cmd + Space (기본 macOS 입력 소스 전환)
+        if let source = CGEventSource(stateID: .hidSystemState) {
+            let cmdDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(kVK_Command), keyDown: true)
+            let spaceDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(kVK_Space), keyDown: true)
+            let spaceUp = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(kVK_Space), keyDown: false)
+            let cmdUp = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(kVK_Command), keyDown: false)
+            
+            cmdDown?.flags = .maskCommand
+            spaceDown?.flags = .maskCommand
+            spaceUp?.flags = .maskCommand
+            
+            // 순차적으로 이벤트 전송
+            cmdDown?.post(tap: .cghidEventTap)
+            spaceDown?.post(tap: .cghidEventTap)
+            spaceUp?.post(tap: .cghidEventTap)
+            cmdUp?.post(tap: .cghidEventTap)
+        }
     }
     
     // Half-QWERTY 매핑 테이블
