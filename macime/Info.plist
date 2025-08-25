@@ -33,7 +33,7 @@
 				<key>tsInputModeAlternateMenuIconFileKey</key>
 				<string>han.png</string>
 				<key>tsInputModeDefaultStateKey</key>
-				<true/>
+				<false/>
 				<key>tsInputModeIsVisibleKey</key>
 				<true/>
 				<key>tsInputModePrimaryInScriptKey</key>
