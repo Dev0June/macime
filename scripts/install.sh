@@ -44,7 +44,7 @@ echo " 빌드된 앱 파일 확인: $APP_SOURCE"
 
 # 4. 앱 복사
 echo ""
-echo "4. macim/une.app 설치 중..."
+echo "4. macime.app 설치 중..."
 cp -R "$APP_SOURCE" "$INSTALL_DIR/"
 if [ $? -eq 0 ]; then
     echo " macime.app 설치 완료: $INSTALL_DIR/macime.app"
