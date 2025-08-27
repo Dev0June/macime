@@ -115,7 +115,7 @@ public final class KeyMapper {
         return halfQwertyMapping[keyCode]
     }
     
-    // macOS 시스템 키 반복 설정을 사용한 타이머
+    // macOS 시스템 키 반복 설정을 사용한 타이머 (첫 글자 딜레이 추가)
     private func startSpaceRepeatTimer() {
         stopSpaceRepeatTimer() // 기존 타이머 정리
         
@@ -123,9 +123,11 @@ public final class KeyMapper {
         
         // macOS 시스템 키 반복 딜레이 가져오기 (초 → 밀리초)
         let systemDelay = NSEvent.keyRepeatDelay * 1000
-        let delayMs = Int(systemDelay)
         
-        spaceRepeatTimer?.schedule(deadline: .now() + .milliseconds(delayMs))
+        // 첫 글자 딜레이를 시스템 딜레이보다 더 길게 설정 (2.5배)
+        let firstCharDelayMs = Int(systemDelay * 2.5)
+        
+        spaceRepeatTimer?.schedule(deadline: .now() + .milliseconds(firstCharDelayMs))
         spaceRepeatTimer?.setEventHandler { [weak self] in
             self?.allowSpaceRepeat = true
         }
