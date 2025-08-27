@@ -6,7 +6,6 @@
 
 - **한글 입력**: 이건구님의 한손 오른손 키보드 (libhangul 기반 구현) 
 - **영어 입력**: Half-QWERTY 키보드 구현 (양쪽 왼손, 오른손키 모두)
-- **한/영 전환**: Caps Lock 키
 
 한손 키보드로 한글과 영어 모두 처리할 수 있지만, 안정성 테스트를 계속 진행 중
 
@@ -21,6 +20,7 @@ libhangul을 사용 했으니 두벌식, 세벌식 등 키보드 레이아웃을
 - 빌드: `./Scripts/build.sh`
 - 설치: `./Scripts/install.sh`
 - 제거: `./scripts/uninstall.sh`
+
 
 **Xcode 사용:**
 1. Xcode에서 빌드: `⌘+B`

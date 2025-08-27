@@ -24,7 +24,7 @@ class InputController: IMKInputController {
     // Caps Lock 상태 추적
     private var capsLockWasPressed = false
     
-    //***********************************************************************************
+    // ============================================================================
     // Info.plist에서 입력 모드 매핑 읽어오기  
     private lazy var inputModeMapping: [String: (id: String, language: String)] = {
         guard let infoDictionary = Bundle.main.infoDictionary,
@@ -63,7 +63,7 @@ class InputController: IMKInputController {
         
         super.setValue(value, forTag: tag, client: sender)
     }
-    //***********************************************************************************
+    // ============================================================================
 
 
     override func activateServer(_ sender: Any!) {
