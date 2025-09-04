@@ -70,6 +70,9 @@ class InputController: IMKInputController {
         super.activateServer(sender)
         client = sender as? IMKTextInput
         
+        // 이전 세션의 상태 완전 초기화
+        cleanupPreviousState()
+        
         // 현재 입력 소스에 따라 모드 설정
         if let inputSource = TISCopyCurrentKeyboardInputSource()?.takeRetainedValue(),
            let sourceIDRef = TISGetInputSourceProperty(inputSource, kTISPropertyInputSourceID) {
@@ -90,20 +93,19 @@ class InputController: IMKInputController {
             setupKoreanMode() // 기본값
         }
 
-        os_log("macime 활성화: %@ 모드", log: logger, type: .info, hangulContext != nil ? "한글" : "영문")
+        os_log("macime 활성화: %@ 모드 (상태 초기화 완료)", log: logger, type: .info, hangulContext != nil ? "한글" : "영문")
     }
     
     override func deactivateServer(_ sender: Any!) {
+        // 상태 전환 전에 현재 조합/입력 상태 강제 정리
+        forceCommitCurrentState()
+        
         super.deactivateServer(sender)
         
-        // 모드에 따른 정리
-        if hangulContext != nil {
-            hangulContext = nil
-        } else {
-            eventHandler.stop()
-        }
+        // 모든 상태 완전 초기화
+        cleanupPreviousState()
         
-        os_log("macime 비활성화", log: logger, type: .info)
+        os_log("macime 비활성화 (상태 정리 완료)", log: logger, type: .info)
     }
     
     private func setupKoreanMode() {
@@ -119,6 +121,46 @@ class InputController: IMKInputController {
             os_log("EventHandler 시작 실패 - 접근성 권한 필요", log: logger, type: .error)
         }
         os_log("영문 모드 설정", log: logger, type: .info)
+    }
+    
+    // 이전 세션의 상태 완전 초기화
+    private func cleanupPreviousState() {
+        // 한글 컨텍스트 초기화
+        if let context = hangulContext {
+            let _ = context.flush() // 버퍼 비우기
+            hangulContext = nil
+        }
+        
+        // 영문 이벤트 핸들러 정리
+        eventHandler.stop()
+        
+        // Caps Lock 상태 초기화
+        capsLockWasPressed = false
+        
+        // 클라이언트의 마킹 상태 초기화
+        if let textClient = client {
+            textClient.setMarkedText(NSAttributedString(), selectionRange: NSRange(location: 0, length: 0), replacementRange: NSRange(location: NSNotFound, length: 0))
+        }
+        
+        os_log("이전 세션 상태 완전 초기화", log: logger, type: .debug)
+    }
+    
+    // 현재 조합/입력 상태 강제 커밋
+    private func forceCommitCurrentState() {
+        // 한글 조합 중인 경우 강제 완성
+        if let context = hangulContext, let textClient = client {
+            let flush = context.flush()
+            if !flush.isEmpty {
+                // 마킹된 텍스트를 완성된 텍스트로 교체
+                textClient.insertText(flush, replacementRange: NSRange(location: NSNotFound, length: NSNotFound))
+                os_log("한글 조합 상태 강제 커밋: %@", log: logger, type: .debug, flush)
+            } else {
+                // 조합 중인 텍스트가 없으면 마킹만 해제
+                textClient.setMarkedText(NSAttributedString(), selectionRange: NSRange(location: 0, length: 0), replacementRange: NSRange(location: NSNotFound, length: 0))
+            }
+        }
+        
+        os_log("현재 입력 상태 강제 커밋 완료", log: logger, type: .debug)
     }
     
     override func inputText(_ string: String!, client: Any!) -> Bool {

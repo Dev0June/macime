@@ -60,4 +60,4 @@ chmod +x "$INSTALL_DIR/macime.app/Contents/MacOS/macime"
 echo " 실행 권한 설정 완료"
 
 echo ""
-echo " macime 설치 완료!"
+echo "===>> macime 설치 완료!"
