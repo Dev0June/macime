@@ -233,6 +233,12 @@ public final class KeyMapper {
     // Half-QWERTY 매핑 테이블
     private let halfQwertyMapping: [Int: Int] = [
         // 왼손 -> 오른손 매핑
+        kVK_ANSI_1: kVK_ANSI_0,
+        kVK_ANSI_2: kVK_ANSI_9,
+        kVK_ANSI_3: kVK_ANSI_8,
+        kVK_ANSI_4: kVK_ANSI_7,
+        kVK_ANSI_5: kVK_ANSI_6,
+        
         kVK_ANSI_Q: kVK_ANSI_P,
         kVK_ANSI_W: kVK_ANSI_O,
         kVK_ANSI_E: kVK_ANSI_I,
@@ -252,6 +258,12 @@ public final class KeyMapper {
         kVK_ANSI_B: kVK_ANSI_N,
         
         // 오른손 -> 왼손 매핑
+        kVK_ANSI_6: kVK_ANSI_5,
+        kVK_ANSI_7: kVK_ANSI_4,
+        kVK_ANSI_8: kVK_ANSI_3,
+        kVK_ANSI_9: kVK_ANSI_2,
+        kVK_ANSI_0: kVK_ANSI_1,
+
         kVK_ANSI_Y: kVK_ANSI_T,
         kVK_ANSI_U: kVK_ANSI_R,
         kVK_ANSI_I: kVK_ANSI_E,
