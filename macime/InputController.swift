@@ -21,8 +21,8 @@ class InputController: IMKInputController {
     // 영문 모드용 이벤트 핸들러
     private let eventHandler = EventHandler()
     
-    // Caps Lock 상태 추적
-    private var capsLockWasPressed = false
+    // Caps Lock 토글 상태 추적
+    private var isCapsLockOn = false
     
     // ============================================================================
     // Info.plist에서 입력 모드 매핑 읽어오기  
@@ -51,16 +51,24 @@ class InputController: IMKInputController {
     override func setValue(_ value: Any!, forTag tag: Int, client sender: Any!) {
         if let sourceID = value as? String,
            let modeInfo = inputModeMapping[sourceID] {
-            
+            let switchingFromKorean = hangulContext != nil && modeInfo.language != "ko"
+
+            if switchingFromKorean {
+                forceCommitCurrentState()
+            }
+
             if modeInfo.language == "ko" {
                 if hangulContext == nil {
                     setupKoreanMode()
                 }
             } else if modeInfo.language == "en" {
                 setupEnglishMode()
+            } else if switchingFromKorean {
+                // 확실하게 마킹된 텍스트 해제 후 기본 한글 모드 복귀
+                setupKoreanMode()
             }
         }
-        
+
         super.setValue(value, forTag: tag, client: sender)
     }
     // ============================================================================
@@ -133,9 +141,9 @@ class InputController: IMKInputController {
         
         // 영문 이벤트 핸들러 정리
         eventHandler.stop()
-        
+
         // Caps Lock 상태 초기화
-        capsLockWasPressed = false
+        isCapsLockOn = false
         
         // 클라이언트의 마킹 상태 초기화
         if let textClient = client {
@@ -276,29 +284,31 @@ class InputController: IMKInputController {
     
     private func handleFlagsChanged(event: NSEvent, client: Any!) -> Bool {
         let flags = event.modifierFlags
-        let isCapsLockPressed = flags.contains(.capsLock)
-        
-        // 한글 모드에서는 Caps Lock을 항상 한/영 전환으로 처리
-        if hangulContext != nil {
-            if isCapsLockPressed && !capsLockWasPressed {
-                capsLockWasPressed = true
-                // 현재 한글 조합 중인 텍스트가 있으면 완성
+        let capsLockFlagState = flags.contains(.capsLock)
+
+        // Caps Lock 토글 감지 (keyCode 57)
+        guard event.keyCode == 57 else {
+            isCapsLockOn = capsLockFlagState
+            return false
+        }
+
+        // 상태가 변경된 경우에만 처리
+        if capsLockFlagState != isCapsLockOn {
+            isCapsLockOn = capsLockFlagState
+
+            if hangulContext != nil {
                 if let context = hangulContext {
                     let flush = context.flush()
                     if !flush.isEmpty {
                         updateDisplay(client: client, preedit: "", committed: flush)
                     }
                 }
-                
-                // 한/영 전환
+
                 performLanguageToggle()
-                return true // 이벤트 소비
-            } else if !isCapsLockPressed {
-                capsLockWasPressed = false
+                return true
             }
         }
-        
-        // 영문 모드에서는 시스템이 처리하도록 허용 (대문자 토글)
+
         return false
     }
     
@@ -315,23 +325,35 @@ class InputController: IMKInputController {
         
         // 다음 입력 소스 찾기
         var targetSource: TISInputSource?
-        
+        var targetModeInfo: (id: String, language: String)?
+
         for i in 0..<count {
             guard let source = CFArrayGetValueAtIndex(inputSources, i) else { continue }
             let inputSource = Unmanaged<TISInputSource>.fromOpaque(source).takeUnretainedValue()
-            
+
             guard let sourceIDRef = TISGetInputSourceProperty(inputSource, kTISPropertyInputSourceID) else { continue }
             let sourceID = Unmanaged<CFString>.fromOpaque(sourceIDRef).takeUnretainedValue() as String
-            
+
             // 현재 소스가 아니고 우리 입력기 중 하나인 경우
             if sourceID != currentSourceID && inputModeMapping[sourceID] != nil {
                 targetSource = inputSource
+                targetModeInfo = inputModeMapping[sourceID]
                 break
             }
         }
-        
+
         // 입력 소스 전환
         if let target = targetSource {
+            if let modeInfo = targetModeInfo {
+                switch modeInfo.language {
+                case "ko":
+                    setupKoreanMode()
+                case "en":
+                    setupEnglishMode()
+                default:
+                    setupKoreanMode()
+                }
+            }
             TISSelectInputSource(target)
         }
     }
